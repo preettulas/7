@@ -40,16 +40,13 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async dueLater() {
-      // FILL IN HERE TO RETURN ITEMS DUE LATER
+ 
       return await Todo.findAll({
         where: {
           dueDate: { [Op.gt]: new Date().toLocaleDateString("en-CA") },
         },
       });
     }
-
-
-
     markAsCompleted() {
       return this.update({completed: true});
     }
