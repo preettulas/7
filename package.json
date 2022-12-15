@@ -16,7 +16,7 @@
       "prettier --write ."
     ]
   },
-  "author": "Dr. Ahmad Jamal <ahmad@tulas.edu.in>",
+  "author": "Preet Kumar <preet.202104123@tulas.edu.in>",
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.8",
