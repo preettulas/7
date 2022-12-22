@@ -22,31 +22,9 @@ module.exports = (sequelize, DataTypes) => {
       return this.findAll();
     }
 
-    static async overdue() {
-      return await Todo.findAll({
-        where: {
-          dueDate: { [Op.lt]: new Date().toLocaleDateString("en-CA") },
-        },
-      });
-    }
-
-    static async dueToday() {
-      // FILL IN HERE TO RETURN ITEMS DUE tODAY
-      return await Todo.findAll({
-        where: {
-          dueDate: { [Op.eq]: new Date().toLocaleDateString("en-CA") },
-        },
-      });
-    }
-
-    static async dueLater() {
- 
-      return await Todo.findAll({
-        where: {
-          dueDate: { [Op.gt]: new Date().toLocaleDateString("en-CA") },
-        },
-      });
-    }
+    
+  
+    
     markAsCompleted() {
       return this.update({completed: true});
     }
