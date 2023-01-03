@@ -60,7 +60,7 @@ describe("Todo Application", function () {
   });
   test("Creates a new todo for the purpose of working", async () => {
     const agent = request.agent(server);
-    await login(agent, "user@gmail.com", "123456");
+    await login(agent, "user@gmail.com", "12345678");
     
     const res = await agent.get("/todos");
     const csrfToken = extractCsrfToken(res);
@@ -75,7 +75,7 @@ describe("Todo Application", function () {
 
   test("Marking todo as complete", async () => {
     const agent = request.agent(server);
-    await login(agent, "user@gmail.com", "123456");
+    await login(agent, "user@gmail.com", "12345678");
     let res = await agent.get("/todos");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
@@ -104,7 +104,7 @@ describe("Todo Application", function () {
 
   test("Testing todo as incomplete", async () => {
     const agent = request.agent(server);
-    await login(agent, "user@gmail.com", "123456");
+    await login(agent, "user@gmail.com", "12345678");
     let res = await agent.get("/todos");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
@@ -147,7 +147,7 @@ describe("Todo Application", function () {
 
   test("Remove a todo with ID", async () => {
     const agent = request.agent(server);
-    await login(agent, "user@gmail.com", "123456");
+    await login(agent, "user@gmail.com", "12345678");
     let res = await agent.get("/todos");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
