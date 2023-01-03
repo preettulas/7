@@ -184,6 +184,7 @@ app.post("/users", async (request, response) => {
       response.redirect("/todos");
     });
   } catch (error) {
+    console.log(error);
     request.flash(
       "error","Here mail already exists, try utilize a new mail"
     )
