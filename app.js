@@ -123,7 +123,7 @@ app.get(
     const user = await User.findByPk(loggedInUser);
     const userName = user.dataValues.firstName;
     if (request.accepts("html")) {
-      response.render("todo", {
+      response.render("todos", {
         title: "Todo app",
         overdue,
         dueToday,
@@ -188,7 +188,7 @@ app.post("/users", async (request, response) => {
     request.flash(
       "error","Here mail already exists, try utilize a new mail"
     )
-    return response.redirect("/signup")
+    //return response.redirect("/signup")
   }
 });
 
