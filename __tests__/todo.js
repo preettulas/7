@@ -34,23 +34,23 @@ describe("Todo Application", function () {
     server.close();
   });
 
-  test("Sign up", async () => {
+  test("Enroll in is working/not", async () => {
     let res = await agent.get("/signup");
     const csrfToken = extractCsrfToken(res);
     
     res = await agent.post("/users").send({
-      firstName: "test",
+      firstName: "preet",
       
-      lastName: "User 1st"
+      lastName: "kumar"
       ,
       email: "user@gmail.com",
-      password: "123456",
+      password: "12345678",
       _csrf: csrfToken,
     });
     expect(res.statusCode).toBe(302);
   });
 
-  test("Sign out", async () => {
+  test("Log out is working/not", async () => {
     let res = await agent.get("/todos");
     expect(res.statusCode).toBe(200);
     res = await agent.get("/signout");
@@ -58,7 +58,7 @@ describe("Todo Application", function () {
     res = await agent.get("/todos");
     expect(res.statusCode).toBe(302);
   });
-  test("Creates a new todo ", async () => {
+  test("Creates a new todo for the purpose of working", async () => {
     const agent = request.agent(server);
     await login(agent, "user@gmail.com", "123456");
     
@@ -102,7 +102,7 @@ describe("Todo Application", function () {
     expect(parsedUpdateResponse.completed).toBe(true);
   });
 
-  test("Marking todo as incomplete", async () => {
+  test("Testing todo as incomplete", async () => {
     const agent = request.agent(server);
     await login(agent, "user@gmail.com", "123456");
     let res = await agent.get("/todos");
@@ -145,7 +145,7 @@ describe("Todo Application", function () {
     expect(parsedUpdateResponse.completed).toBe(false);
   });
 
-  test("Delete a todo with ID", async () => {
+  test("Remove a todo with ID", async () => {
     const agent = request.agent(server);
     await login(agent, "user@gmail.com", "123456");
     let res = await agent.get("/todos");
