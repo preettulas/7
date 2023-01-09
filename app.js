@@ -188,7 +188,7 @@ app.post("/users", async (request, response) => {
     request.flash(
       "error","Here mail already exists, try utilize a new mail"
     )
-    //return response.redirect("/signup")
+    return response.redirect("/signup")
   }
 });
 
