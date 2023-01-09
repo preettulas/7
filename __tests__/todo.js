@@ -58,6 +58,22 @@ describe("Todo Application", function () {
     res = await agent.get("/todos");
     expect(res.statusCode).toBe(302);
   });
+  
+  test("Second user Enrollmentt", async () => {
+    let res = await agent.get("/signup");
+    const csrfToken = extractCsrfToken(res);
+    
+    res = await agent.post("/users").send({
+      firstName: "kamal",
+      
+      lastName: "bahadur"
+      ,
+      email: "user2@gmail.com",
+      password: "123456789",
+      _csrf: csrfToken,
+    });
+    expect(res.statusCode).toBe(302);
+  });
   test("Creates a new todo for the purpose of working", async () => {
     const agent = request.agent(server);
     await login(agent, "user@gmail.com", "12345678");
@@ -72,6 +88,7 @@ describe("Todo Application", function () {
     });
     expect(response.statusCode).toBe(302);
   });
+  
 
   test("Marking todo as complete", async () => {
     const agent = request.agent(server);
@@ -171,5 +188,37 @@ describe("Todo Application", function () {
     });
     const parsedDeleteResponse = JSON.parse(response.text);
     expect(parsedDeleteResponse.success).toBe(true);
+  });
+  test("Deleting the one user todo by second user", async () => {
+    const firstAgent = request.agent(server);
+    await login(firstAgent, "user@gmail.com.com", "12345678");
+    let res = await firstAgent.get("/todos");
+    let csrfToken = extractCsrfToken(res);
+    await firstAgent.post("/todos").send({
+      title: "ONe todo",
+      dueDate: new Date().toISOString(),
+      completed: false,
+      _csrf: csrfToken,
+    });
+
+    const groupedTodosResponse = await firstAgent
+      .get("/todos")
+      .set("Accept", "application/json");
+    const parsedGroupedResponse = JSON.parse(groupedTodosResponse.text);
+    const dueTodayCount = parsedGroupedResponse.dueToday.length;
+    const firstUserLatestTodo = parsedGroupedResponse.dueToday[dueTodayCount - 1];
+
+    const secondAgent = request.agent(server);
+    await login(secondAgent, "user2@gmail.com", "123456789");
+
+    res = await secondAgent.get("/todos");
+    csrfToken = extractCsrfToken(res);
+    const deletedResponse = await secondAgent
+      .delete(`/todos/${firstUserLatestTodo.id}`)
+      .send({
+        _csrf: csrfToken,
+      });
+    const parsedDeletedResponse = JSON.parse(deletedResponse.text);
+    expect(parsedDeletedResponse).toBe(false);
   });
 });
