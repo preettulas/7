@@ -103,10 +103,16 @@ app.post(
 
 app.get("/", async (request, response) => {
   
+  if(request.user)
+  {
+    response.redirect('/todos');
+  }
+  else{
   response.render("index", {
-    title: "Todo app",
+    title: "My Todo app",
     csrfToken: request.csrfToken(),
   });
+  }
 });
 
 app.get(
